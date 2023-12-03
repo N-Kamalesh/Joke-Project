@@ -1,6 +1,10 @@
 <!--Including the header partial-->
 <%- include("partials/header.ejs") %>
-
+<form action="/search" method="post">
+    <label for="subreddit">Enter the subreddit</label>
+    <input type="text" autocomplete="off" name="subreddit" required >
+    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form>
 <% if(locals.res) { %>
     <h1>Here's your meme</h1>
     <div class="container">
@@ -8,19 +12,19 @@
         <% if(res.nsfw && res.spoiler){ %> <!-- Checking if meme contains both nsfw & spoiler-->
             <div class="alert"> 
                 <p><i class="fa-solid fa-triangle-exclamation"></i>This meme contains NSFW content and some potential spoiler. Do you wanna see the meme ? </p>
-                <button type="button" class="btn">Show meme</button>
+                <button type="button">Show meme</button>
             </div>
             <% hide = "hidden" %>
         <% } else if(res.nsfw){ %> <!-- Checking if meme contains both nsfw -->
             <div class="alert">
                 <p><i class="fa-solid fa-triangle-exclamation"></i>This meme contains NSFW content. Do you wanna see the meme ? </p>
-                <button type="button" class="btn">Show meme</button>
+                <button type="button">Show meme</button>
             </div>
             <% hide = "hidden" %>
         <% } else if(res.spoiler){ %> <!-- Checking if meme contains spoiler-->
             <div class="alert">
                 <p><i class="fa-solid fa-triangle-exclamation"></i>This meme contains potential spoiler. Do you wanna see the meme ? </p>
-                <button type="button" class="btn">Show meme</button>
+                <button type="button">Show meme</button>
             </div>
             <% hide = "hidden" %>
         <% } %>
@@ -35,8 +39,7 @@
             </div>
         </div>
     </div>
-    <% } %>
-    <% if(locals.error) { %>
+    <% } else if(locals.error) { %>
         <h1>Uh Oh!!!</h1>
         <!-- Displaying the error message if any error occurs -->
         <div class="container"></div>
@@ -44,7 +47,9 @@
                 <p><%= error %></p>
             </div>
         </div>
+    <% } else {%>
+        <h3>Get a meme from the Subreddit you want</h3>
     <% } %>
-    
+
 <!--Including the footer partial-->
 <%- include("partials/footer.ejs") %>

@@ -33,6 +33,22 @@ app.get("/", async (req, res) => {
     }
 }) 
 
+app.get("/search", async (req, res) => {
+    res.render(path.join(__dirname, "views/search.ejs"));
+}) 
+
+app.post("/search", async (req, res) => {
+    let subreddit = req.body.subreddit;
+    subreddit = subreddit.trim();
+    try{
+        const result = await axios.get(API_URL + "/gimme/"+subreddit);
+        res.render(path.join(__dirname, "views/search.ejs"), { res : result.data});
+    } catch (error) {
+        console.log(error.message);
+        res.render(path.join(__dirname, "views/search.ejs"), {error : error.message}); 
+    }
+}) 
+
 //Setting the application server to listen to the specified port
 app.listen(process.env.PORT || port, () => {
     console.log(`Server up and running on port ${port}`)
