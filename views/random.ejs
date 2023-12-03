@@ -1,0 +1,42 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container">
+    <% if(locals.res) { %>
+        <% var hide = "" %>
+        <% if(res.nsfw && res.spoiler){ %>
+            <div class="alert">
+                <p><i class="fa-solid fa-triangle-exclamation"></i>This meme contains NSFW content and some potential spoiler. Do you wanna see the meme ? </p>
+                <button type="button">Show meme</button>
+            </div>
+            <% hide = "hidden" %>
+        <% } else if(res.nsfw){ %>
+            <div class="alert">
+                <p><i class="fa-solid fa-triangle-exclamation"></i>This meme contains NSFW content. Do you wanna see the meme ? </p>
+                <button type="button">Show meme</button>
+            </div>
+            <% hide = "hidden" %>
+        <% } else if(res.spoiler){ %>
+            <div class="alert">
+                <p><i class="fa-solid fa-triangle-exclamation"></i>This meme contains potential spoiler. Do you wanna see the meme ? </p>
+                <button type="button">Show meme</button>
+            </div>
+            <% hide = "hidden" %>
+        <% } %>
+        <div class="meme">
+            <h2><%= res.title %></h2>
+            <img src = "<%= res.url %>" alt="meme" class="<%= hide %>" id="memePic"/>
+            <div class="credentials">
+                <span>Subreddit : <%= res.subreddit %></span>
+                <a href="<%= res.postLink %>">Post Link</a>
+                <span>Author : <%= res.author %></span>
+            </div>
+        </div>
+    <% } %>
+    <% if(locals.error) { %>
+        <div class="error">
+            <%= error %>
+        </div>
+    <% } %>
+</div>
+
+<%- include("partials/footer.ejs") %>
